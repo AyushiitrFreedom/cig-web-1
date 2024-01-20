@@ -1,4 +1,3 @@
-import React from 'react'
 import '../Homepage/CarouselData.css'
 import hero from "../Images/hero.png";
 import samsung from "../Images/Samsung.png";
@@ -17,47 +16,29 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import React, { useState, useEffect } from 'react';
 
 function CarouselData() {
-    const settings = {
-        dots: false,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 500,
-        autoplaySpeed: 2000,
-        cssEase: "linear"
-    };
-    return (
-        // <div className="TestimonialsHome">
-        //     <div className="TestimonialsHomeBox">
-        //         <div className="TestimonialsHomePlate">
-        //             <div className="TestimonialsHomeHeading1">
-        //                 Featured Works
-        //             </div>
-        //         </div>
-        //         <Slider {...settings}>
-        //             {data.map((d) => (
-        //                 <div className="TestimonialSlider">
-        //                     <div className="TestimonialSliderBox">
-        //                         <div className="testimonialimg">
-        //                             <img src={d.image} className='testimonialimg1' alt='img1' />
-        //                         </div>
-        //                         <div className="testimonialname">
-        //                             {d.heading}
-        //                         </div>
-        //                         <div className="testimonialDecription">
-        //                             {d.text}
-        //                         </div>
-        //                     </div>
 
-        //                 </div>
-        //             ))}
-        //         </Slider>
-        //     </div>
-        // </div>
+    let [data, setData] = useState([])
+    let [image, setImage] = useState('')
+
+    useEffect(() => {
+        let url = 'https://api.sheety.co/156146c79d788774151134fb228ebb49/cigDatabase/events';
+        fetch(url)
+            .then((response) => response.json())
+            .then(json => {
+                // Do something with the data
+                console.log(json.events);
+                setData(json.events)
+
+            });
+
+    }, [])
+    return (
+
         <>
+            {/* <div className='border-solid border-2 border-indigo-600'> */}
 
             <Swiper
                 // spaceBetween={50}
@@ -70,14 +51,27 @@ function CarouselData() {
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
             >
-                <SwiperSlide><img className='object-contain h-[50vh] w-[100vw]' src='https://images.unsplash.com/photo-1682686580224-cd46ea1a6950?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8'></img></SwiperSlide>
-                <SwiperSlide><img className='object-contain h-[50vh] w-[100vw]' src='https://plus.unsplash.com/premium_photo-1703689541382-8945aee7fcf8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8'></img></SwiperSlide>
-                <SwiperSlide>
-                    hi
-                </SwiperSlide>
-                <SwiperSlide>Slide 4</SwiperSlide>
 
-            </Swiper>
+
+                {data.map((item, index) => (
+                    // setImage(item.imageUrl)
+                    <SwiperSlide key={index}>
+                        <div className="relative mx-[20vw] mb-[3vh]">
+                            <img src={item.imageUrl} alt={item.title} className="w-[60vw] h-auto" />
+                            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                                <div className="bg-black bg-opacity-50 text-white p-4 lg:mt-[60vh] ">
+                                    <h2 className=" font-bold mb-2 lg:text-7xl">{item.title}</h2>
+
+                                </div>
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                ))}
+
+
+
+            </Swiper >
+            {/* </div> */}
         </>
     )
 }
@@ -123,3 +117,6 @@ const data = [
 
 
 export default CarouselData
+
+
+// make a component which has a image as background and text displayed over it , make sure the ctext is visible and the component is responsive use tailwind css must

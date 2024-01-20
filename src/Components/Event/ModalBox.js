@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import './Modal.css';
 import Pupup from './Popup'
 import UKUMEVENT from '../Images/UKUM-EVENT.png'
@@ -8,7 +8,8 @@ import { Dialog, Transition } from '@headlessui/react'
 function ModalBox() {
 
     let [isOpen, setIsOpen] = useState(false)
-    let [content, setContent] = useState('')
+    let [content, setContent] = useState(1)
+    let [data, setData] = useState([])
 
     function closeModal() {
         setIsOpen(false)
@@ -19,59 +20,47 @@ function ModalBox() {
         // setContent()
     }
 
-    function contentSet(content) {
-        setContent(content)
-    }
+
+    useEffect(() => {
+        let url = 'https://api.sheety.co/156146c79d788774151134fb228ebb49/cigDatabase/events';
+        fetch(url)
+            .then((response) => response.json())
+            .then(json => {
+                // Do something with the data
+                console.log(json.events);
+                setData(json.events)
+
+            });
+
+    }, [])
 
 
 
 
     return (
         <>
+
             <div className='events-pop-up'>
                 <div className='events-pop-up-heading'>
                     <h1>Events </h1>
                 </div>
                 <div className="events-pop-up-cards">
-                    <div className="events-pop-up-cards-1">
-                        <div className="events-pop-up-cards-1-content-1">
-                            <img src={UKUMEVENT} alt='case study' className='events-pop-up-cards-1-img'></img>
-                            <span className='events-pop-up-cards-1-topic'>Uttarakhand Udyog Mahotsava</span>
+                    {Array.isArray(data) && data.map((event, index) => (
+                        <div className="events-pop-up-cards-1" key={index}>
+                            <div className="events-pop-up-cards-1-content-1">
+                                <img src={event.imageUrl} alt={event.title} className='events-pop-up-cards-1-img'></img>
+                                <span className='events-pop-up-cards-1-topic'>{event.title}</span>
+                            </div>
+                            <div className="events-pop-up-cards-1-btns">
+                                <button className="events-pop-up-cards-1-btns-details" onClick={() => {
+                                    openModal()
+                                    setContent(index)
+                                }}>Details</button>
+                            </div>
                         </div>
-                        <div className="events-pop-up-cards-1-btns">
-                            <button className="events-pop-up-cards-1-btns-details" onClick={() => {
-                                openModal()
-                                contentSet("hi")
-
-                            }}>Details</button>
-                        </div>
-                    </div>
-
-                    {/* <div className="events-pop-up-cards-2">
-                        <div className="events-pop-up-cards-2-content-2">
-                            <img src={IndustrailVisit} alt='case study' className='events-pop-up-cards-1-img'></img>
-                            <span className='events-pop-up-cards-2-topic'>Industrail visit</span>
-                        </div>
-                        <div className="events-pop-up-cards-2-btns">
-                            <button className="events-pop-up-cards-2-btns-details" onClick={openModal('hello')}>Details</button>
-                        </div>
-                    </div>
-
-                    <div className="events-pop-up-cards-3">
-                        <div className="events-pop-up-cards-3-content-3">
-                            <img src={InstituteResearchDay} alt='case study' className='events-pop-up-cards-1-img'></img>
-                            <span className='events-pop-up-cards-3-topic'>Institute Research day</span>
-                        </div>
-                        <div className="events-pop-up-cards-3-btns">
-                            <button className="events-pop-up-cards-3-btns-details" onClick={openModal("how are you")}>Details</button>
-                        </div>
-                    </div> */}
-
-
+                    ))}
                 </div>
-
-
-            </div >
+            </div>
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={closeModal}>
                     <Transition.Child
@@ -102,16 +91,16 @@ function ModalBox() {
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-gray-900"
                                     >
-                                        Payment successful
+                                        {data[content] ? data[content].title : ""}
                                     </Dialog.Title>
                                     <div className="mt-2">
                                         <p className="text-sm text-gray-500">
-                                            Your payment has been successfully submitted. We’ve sent
-                                            you an email with all of the details of your order.
+                                            {data[content] ? data[content].desc : ""}
+
                                         </p>
                                     </div>
 
-                                    <div className="mt-4">
+                                    {/* <div className="mt-4">
                                         <button
                                             type="button"
                                             className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
@@ -119,7 +108,7 @@ function ModalBox() {
                                         >
                                             Got it, thanks!
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

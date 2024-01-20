@@ -40,7 +40,7 @@ function Navigationbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           {/* </Link> */}
-          <div className=" collapse navbar-collapse Navbar-Item-Box logo-component" id="navbarNavAltMarkup">
+          <div className="  navbar-collapse Navbar-Item-Box logo-component" id="navbarNavAltMarkup">
             <div className="Navbar-Item navbar-nav">
               <Link className="nav-item nav-link active" to="/Home">Home <span className="sr-only"></span></Link>
               <Link className="nav-item nav-link active" to="/AboutUs">About <span className="sr-only"></span></Link>
