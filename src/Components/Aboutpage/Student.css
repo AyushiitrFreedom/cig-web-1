@@ -20,7 +20,7 @@
 	height: 293.862px;
 	border-radius: 16px;
 	flex-shrink: 0;
-	background-image: url('C:\Users\ganes\OneDrive\Desktop\CIG\cig-web\src\Components\Images\CardBg.svg');
+	background-image: url('./../Images/CardBg.svg');
 	background-size: 100% 100%;
 	display: flex;
 	align-items: center;
@@ -76,6 +76,7 @@
 		line-height: normal;
 	}
 }
+
 @media screen and (max-width: 800px) {
 	.Student-card-Item {
 		width: 197px;
@@ -115,9 +116,9 @@
 			font-size: 12px;
 
 		}
+
 		small {
 			font-size: 10px;
 		}
 	}
 }
-

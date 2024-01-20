@@ -8,7 +8,15 @@ import cis from "../Images/cls.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 function CarouselData() {
     const settings = {
@@ -22,33 +30,55 @@ function CarouselData() {
         cssEase: "linear"
     };
     return (
-        <div className="TestimonialsHome">
-            <div className="TestimonialsHomeBox">
-                <div className="TestimonialsHomePlate">
-                    <div className="TestimonialsHomeHeading1">
-                        Featured Works
-                    </div>
-                </div>
-                <Slider {...settings}>
-                    {data.map((d) => (
-                        <div className="TestimonialSlider">
-                            <div className="TestimonialSliderBox">
-                                <div className="testimonialimg">
-                                    <img src={d.image} className='testimonialimg1' alt='img1' />
-                                </div>
-                                <div className="testimonialname">
-                                    {d.heading}
-                                </div>
-                                <div className="testimonialDecription">
-                                    {d.text}
-                                </div>
-                            </div>
+        // <div className="TestimonialsHome">
+        //     <div className="TestimonialsHomeBox">
+        //         <div className="TestimonialsHomePlate">
+        //             <div className="TestimonialsHomeHeading1">
+        //                 Featured Works
+        //             </div>
+        //         </div>
+        //         <Slider {...settings}>
+        //             {data.map((d) => (
+        //                 <div className="TestimonialSlider">
+        //                     <div className="TestimonialSliderBox">
+        //                         <div className="testimonialimg">
+        //                             <img src={d.image} className='testimonialimg1' alt='img1' />
+        //                         </div>
+        //                         <div className="testimonialname">
+        //                             {d.heading}
+        //                         </div>
+        //                         <div className="testimonialDecription">
+        //                             {d.text}
+        //                         </div>
+        //                     </div>
 
-                        </div>
-                    ))}
-                </Slider>
-            </div>
-        </div>
+        //                 </div>
+        //             ))}
+        //         </Slider>
+        //     </div>
+        // </div>
+        <>
+
+            <Swiper
+                // spaceBetween={50}
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                navigation
+                pagination={{ clickable: true }}
+                // scrollbar={{ draggable: true }}
+
+                slidesPerView={1}
+                onSlideChange={() => console.log('slide change')}
+                onSwiper={(swiper) => console.log(swiper)}
+            >
+                <SwiperSlide><img className='object-contain h-[50vh] w-[100vw]' src='https://images.unsplash.com/photo-1682686580224-cd46ea1a6950?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8'></img></SwiperSlide>
+                <SwiperSlide><img className='object-contain h-[50vh] w-[100vw]' src='https://plus.unsplash.com/premium_photo-1703689541382-8945aee7fcf8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8'></img></SwiperSlide>
+                <SwiperSlide>
+                    hi
+                </SwiperSlide>
+                <SwiperSlide>Slide 4</SwiperSlide>
+
+            </Swiper>
+        </>
     )
 }
 const data = [
@@ -93,6 +123,3 @@ const data = [
 
 
 export default CarouselData
-
-
-
